@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Prolog за Цветя с GIF</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<h1>Prolog за Цветя с GIF</h1>
+
+<input id="queryInput" type="text" placeholder="Въведете Prolog заявка, напр. is_flowering(X)." />
+<button id="runBtn">Изпълни</button>
+
+<div id="result"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/tau-prolog@0.3.2/modules/core.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tau-prolog@0.3.2/modules/lists.js"></script>
+<script>
+// Променлива knowledge съдържа Prolog базата с цветя и правила
+const knowledge = `
+flower(rose).
+flower(tulip).
+flower(sunflower).
+flower(lavender).
+flower(daisy).
+
+is_flowering(X) :- flower(X).
+is_tall(sunflower).
+is_aromatic(rose).
+is_aromatic(lavender).
+is_colorful(tulip).
+is_colorful(daisy).
+
+% Пример на правило: цъфтящо и ароматно цвете
+is_flowering_and_aromatic(X) :- is_flowering(X), is_aromatic(X).
+`;
+
+// Обект с GIF за всяко цвете
+const flowerAnimations = {
+  rose: '<img src="https://media.giphy.com/media/1BdIP2GMCg9bG/giphy.gif" class="flower-gif" alt="Rose" />',
+  tulip: '<img src="https://media.giphy.com/media/v6aOjy0Qo1fIA/giphy.gif" class="flower-gif" alt="Tulip" />',
+  sunflower: '<img src="https://media.giphy.com/media/2rtQMJvhzOnRe/giphy.gif" class="flower-gif" alt="Sunflower" />',
+  lavender: '<img src="https://media.giphy.com/media/YbbGdFgL8XnXG/giphy.gif" class="flower-gif" alt="Lavender" />',
+  daisy: '<img src="https://media.giphy.com/media/Kt1kOEsy3bFVy/giphy.gif" class="flower-gif" alt="Daisy" />',
+};
+
+const session = pl.create(1000);
+session.consult(knowledge);
+
+const queryInput = document.getElementById("queryInput");
+const runBtn = document.getElementById("runBtn");
+const resultDiv = document.getElementById("result");
+
+runBtn.addEventListener("click", () => {
+  const query = queryInput.value.trim();
+  if (!query) {
+    resultDiv.innerHTML = "<p>Моля, въведете Prolog заявка.</p>";
+    return;
+  }
+
+  resultDiv.innerHTML = "<p>Търсене...</p>";
+
+  // Премахваме всички предишни решения от сесията
+  session.query(query);
+
+  let answers = [];
+  session.answers(answer => {
+    if (answer === false) {
+      // Край на решенията
+      if (answers.length === 0) {
+        resultDiv.innerHTML = "<p>Няма намерени решения.</p>";
+      } else {
+        displayResults(answers);
+      }
+    } else {
+      answers.push(answer);
+    }
+  });
+});
+
+function displayResults(answers) {
+  // Извличаме стойностите на променливите в решенията
+  let outputHTML = "<h3>Намерени решения:</h3>";
+  for (let ans of answers) {
+    const vars = Object.keys(ans.links);
+    let varsOutput = vars.map(v => {
+      const val = ans.links[v].toString();
+      return `<b>${v}</b> = ${val}`;
+    }).join(", ");
+
+    outputHTML += `<p>${varsOutput}</p>`;
+
+    // Ако намерим стойност на променлива X, която е цвете, показваме GIF
+    for (let v of vars) {
+      const val = ans.links[v].toString();
+      if (flowerAnimations[val]) {
+        outputHTML += flowerAnimations[val];
+      }
+    }
+  }
+  resultDiv.innerHTML = outputHTML;
+}
+</script>
+
+</body>
+</html>
