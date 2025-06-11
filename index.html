@@ -39,12 +39,18 @@ is_flowering_and_aromatic(X) :- is_flowering(X), is_aromatic(X).
 
 // Обект с GIF за всяко цвете
 const flowerAnimations = {
-  rose: '<img src ="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbWxyenFqNzF2MWxucXhpZDEwNDY1dTdpbGQ2djg2N2RveG8wMWs0eSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/hhYDWei0c7pDy/giphy.gif" class="flower-gif" alt="Rose" />',
-  tulip: '<img src="https://media.giphy.com/media/v6aOjy0Qo1fIA/giphy.gif" class="flower-gif" alt="Tulip" />',
-  sunflower: '<img src="https://media.giphy.com/media/2rtQMJvhzOnRe/giphy.gif" class="flower-gif" alt="Sunflower" />',
-  lavender: '<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMGl1eHQ4M215aDUweW5xcmlydWthcmNncmd4ZXZmYW8zYXN3a3R1OSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/U1mIZ4n38Jh6k0hAPT/giphy.gif" class="flower-gif" alt="Lavender" />',
-  daisy: '<img src="https://media.giphy.com/media/Kt1kOEsy3bFVy/giphy.gif" class="flower-gif" alt="Daisy" />',
+  rose: '<img src="https://upload.wikimedia.org/wikipedia/commons/9/97/Flower_rose.gif" alt="Rose" class="flower-gif" />',
+  tulip: '<img src="https://media.giphy.com/media/v6aOjy0Qo1fIA/giphy.gif" alt="Tulip" class="flower-gif" />',
+  sunflower: '<img src="https://media.giphy.com/media/2rtQMJvhzOnRe/giphy.gif" alt="Sunflower" class="flower-gif" />',
+  lavender: '<img src="https://upload.wikimedia.org/wikipedia/commons/1/15/Lavender_flowers_animation.gif" alt="Lavender" class="flower-gif" />',
+  daisy: '<img src="https://media.giphy.com/media/Kt1kOEsy3bFVy/giphy.gif" alt="Daisy" class="flower-gif" />',
+  orchid: '<img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Orchid_flower_animation.gif" alt="Orchid" class="flower-gif" />',
+  lily: '<img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Lily_animation.gif" alt="Lily" class="flower-gif" />',
+  chrysanthemum: '<img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Chrysanthemum_animation.gif" alt="Chrysanthemum" class="flower-gif" />',
+  hibiscus: '<img src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Hibiscus_flower_animation.gif" alt="Hibiscus" class="flower-gif" />',
+  magnolia: '<img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Magnolia_flower_animation.gif" alt="Magnolia" class="flower-gif" />',
 };
+
 
 const session = pl.create(1000);
 session.consult(knowledge);
